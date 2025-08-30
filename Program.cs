@@ -4,15 +4,21 @@
     {
         static ListStudent listStudent = new ListStudent();
 
-        public static void OnStudentAdded()
+        public static bool OnStudentAdded(Student student1, Student student2)
+        {
+            return student1.GPA > student2.GPA;
+        }
+
+ 
+        public static void DisplayStudents()
         {
             Console.WriteLine("List student after sort: ");
             listStudent.ShowStudents();
             Console.WriteLine();
         }
+
         public static void Main(string[] args)
         {
-            Random random = new Random();
             listStudent.StudentAdded += OnStudentAdded;
 
             listStudent.AddStudent(new Student(1, "Nguyen Van A", 3.5), false);
@@ -26,6 +32,9 @@
             Console.WriteLine();
 
             listStudent.Sort();
+
+            DisplayStudents();
+
             Console.ReadLine();
         }
     }

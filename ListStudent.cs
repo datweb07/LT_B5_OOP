@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public delegate void StudentAddHandler();
+    public delegate bool StudentAddDelegate(Student student1, Student student2);
+
     public class ListStudent
     {
         private List<Student> students = new List<Student>();
+        public event StudentAddDelegate? StudentAdded;
 
-        // Sự kiên thêm sinh viên
-        public event StudentAddHandler StudentAdded;
-
-        // Phương thức thêm sinh viên
-        public void AddStudent(Student student, bool triggerEvent = true)
+        public void AddStudent(Student student, bool Event = true)
         {
             students.Add(student);
-            if (triggerEvent)
+            if (Event)
             {
                 Sort();
             }
@@ -27,20 +25,20 @@ namespace ConsoleApp1
         public void Sort()
         {
             BubbleSort(students);
-            if (StudentAdded != null)
-            {
-                // Gọi sự kiện
-                StudentAdded();
-            }
         }
-        // Phương thức sắp xếp sinh viên dựa trên delegate
+
+        public bool CompareTo(Student student1, Student student2)
+        {
+            return student1.GPA > student2.GPA;
+        }
+
         public void BubbleSort(List<Student> listStudent)
         {
             for (int i = 0; i < listStudent.Count - 1; i++)
             {
                 for (int j = 0; j < listStudent.Count - i - 1; j++)
                 {
-                    if (listStudent[j].GPA > listStudent[j + 1].GPA)
+                    if (CompareTo(listStudent[j], listStudent[j + 1]))
                     {
                         Student temp = listStudent[j];
                         listStudent[j] = listStudent[j + 1];
