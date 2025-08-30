@@ -43,7 +43,7 @@ namespace ConsoleApp1
                     if (listStudent[j].GPA > listStudent[j + 1].GPA)
                     {
                         Student temp = listStudent[j];
-                        listStudent[i] = listStudent[j + 1];
+                        listStudent[j] = listStudent[j + 1];
                         listStudent[j + 1] = temp;
                     }
                 }
